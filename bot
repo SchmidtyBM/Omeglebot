@@ -1,0 +1,54 @@
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+from bs4 import BeautifulSoup
+import time
+
+def chat_bot():
+    txt = driver.find_element_by_class_name('chatmsg')
+    txt.send_keys('Add "abby.gene123" on Snapchat for a fun time ;)')
+    txt.send_keys(Keys.ENTER)
+
+    time.sleep(1)
+
+    disconnect = driver.find_element_by_class_name("disconnectbtn")
+
+    html = driver.page_source
+    soup = BeautifulSoup(html, "html.parser")
+    log = soup.find("button", class_="disconnectbtn").text
+
+    if "StopEsc" in log:
+        disconnect.click()
+        disconnect.click()
+        time.sleep(1)
+        disconnect.click()
+        time.sleep(1)
+    else:
+        disconnect.click()
+        time.sleep(1)
+    
+        
+path = "C:\Program Files (x86)\chromedriver.exe"
+
+driver = webdriver.Chrome(path)
+driver.get("https://www.omegle.com/")
+
+time.sleep(1)
+
+chat = driver.find_element_by_id("textbtn")
+chat.click()
+
+time.sleep(1)
+
+checkbox1 = driver.find_element_by_xpath("//label[text()='By checking the box you acknowledge that you have reviewed and agree to be bound by Omegle’s ']")
+checkbox1.click()
+
+checkbox2 = driver.find_element_by_xpath("//label[text()='Omegle may not be used by persons under the age of 13. Persons between 13 and 18 years of age may only use Omegle with the permission and under the supervision of their legal guardian. See our ']")
+checkbox2.click()
+
+submit = driver.find_element_by_xpath("//input[@value='Confirm & continue']")
+submit.click()
+
+time.sleep(1)
+
+while True:
+    chat_bot()
